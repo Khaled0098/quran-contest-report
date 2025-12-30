@@ -8,7 +8,7 @@ import streamlit as st
 # Initialize page
 st.set_page_config(page_title="Quran Contest Report", layout="wide")
 
-local_hour = (datetime.now().hour - 8) % 24 
+# local_hour = (datetime.now().hour - 8) % 24 
 is_daytime = 6 <= local_hour < 18
 
 HIGHLIGHT_BG = "#dfe8d2" if is_daytime else "#4b5a4a"
@@ -26,7 +26,8 @@ theme_css = f"""
     
     /* --text-color: {"#2a2723" if is_daytime else "#e9e6df"}; */
     
-    --text-color: {"#000000" if is_daytime else "#e9e6df"};
+    /* --text-color: {"#000000" if is_daytime else "#e9e6df"};*/
+    --text-color: {"#000000" if is_daytime else "#ffffff"};
     --uploader-bg: {"#f7f4ee" if is_daytime else "#1f2721"};
     --uploader-text: {"#2a2723" if is_daytime else "#e9e6df"};
     --input-bg: {"#f6f0e6" if is_daytime else "#2b322b"};
