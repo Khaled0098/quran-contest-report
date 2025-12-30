@@ -426,7 +426,6 @@ import streamlit as st
 # Initialize page
 st.set_page_config(page_title="Quran Contest Report", layout="wide")
 
-# MAC Branding CSS with time-based day/night palette
 local_hour = (datetime.now().hour - 8) % 24 
 is_daytime = 6 <= local_hour < 18
 
@@ -859,11 +858,47 @@ def tables_to_excel_bytes(tables: dict) -> bytes:
         for sheet_title, data in tables.items():
             name = safe_name(sheet_title)
             is_count = sheet_title == "Category_Counts"
-            data.to_excel(writer, sheet_name=name, startrow=3 if not is_count else 0, index=False)
+            export_data = add_checkin_column(data) if not is_count else data
+            export_data.to_excel(writer, sheet_name=name, startrow=3 if not is_count else 0, index=False)
             if not is_count:
                 ws = writer.sheets[name]
                 ws.write(0, 0, sheet_title, title_fmt)
-                ws.set_column("B:E", 25)
+                ws.set_column("B:F", 25)
+    return output.getvalue()
+
+def tables_to_single_sheet_bytes(tables: dict) -> bytes:
+    output = BytesIO()
+    with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
+        workbook = writer.book
+        from xlsxwriter.utility import xl_rowcol_to_cell
+        title_fmt = workbook.add_format({"bold": True, "font_size": 16, "font_color": "#1F4E78", "align": "left"})
+        sheet_name = "All Categories"
+        row_cursor = 0
+        ws = None
+        for sheet_title, data in tables.items():
+            if sheet_title == "Category_Counts":
+                continue
+            export_data = data.copy()
+            if "Email" in export_data.columns:
+                export_data = export_data.drop(columns=["Email"])
+            export_data["Admitted"] = ""
+            export_data["Seated"] = ""
+            export_data["Tested"] = ""
+            export_data.to_excel(writer, sheet_name=sheet_name, startrow=row_cursor + 1, index=False)
+            ws = writer.sheets[sheet_name]
+            ws.write(row_cursor, 0, sheet_title, title_fmt)
+            door_col = export_data.columns.get_loc("Admitted")
+            seated_col = export_data.columns.get_loc("Seated")
+            test_col = export_data.columns.get_loc("Tested")
+            data_start = row_cursor + 2
+            for idx in range(len(export_data)):
+                row = data_start + idx
+                ws.insert_checkbox(row, door_col, False)
+                ws.insert_checkbox(row, seated_col, False)
+                ws.insert_checkbox(row, test_col, False)
+            row_cursor += len(export_data) + 3
+        if ws:
+            ws.set_column("A:G", 25)
     return output.getvalue()
 
 def labels_to_pdf_bytes(df: pd.DataFrame) -> bytes:
@@ -941,6 +976,12 @@ def highlight_matches(df: pd.DataFrame, query: str):
             return [""] * len(row)
         return [f"background-color: {HIGHLIGHT_BG}; color: {HIGHLIGHT_TEXT}"] * len(row)
     return df.style.apply(style_row, axis=1)
+
+def add_checkin_column(df: pd.DataFrame) -> pd.DataFrame:
+    view = df.copy()
+    if "Checked In" not in view.columns:
+        view["Checked In"] = False
+    return view
 
 # --- UI Layout ---
 
@@ -1214,6 +1255,12 @@ st.sidebar.download_button(
     "Download Excel Report",
     data=tables_to_excel_bytes(reports),
     file_name=f"Quran_Contest_Report_{datetime.now().strftime('%Y%m%d')}.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+)
+st.sidebar.download_button(
+    "Download All Tabs (Single Sheet)",
+    data=tables_to_single_sheet_bytes(reports),
+    file_name=f"Quran_Contest_All_Categories_{datetime.now().strftime('%Y%m%d')}.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 )
 filtered_reports = build_reports(filtered_results)
