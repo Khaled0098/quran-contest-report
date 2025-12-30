@@ -8,7 +8,7 @@ import streamlit as st
 # Initialize page
 st.set_page_config(page_title="Quran Contest Report", layout="wide")
 
-# local_hour = (datetime.now().hour - 8) % 24 
+local_hour = (datetime.now().hour - 8) % 24 
 is_daytime = 6 <= local_hour < 18
 
 HIGHLIGHT_BG = "#dfe8d2" if is_daytime else "#4b5a4a"
