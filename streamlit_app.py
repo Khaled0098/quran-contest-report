@@ -144,6 +144,14 @@ theme_css = f"""
   [data-testid="stFileUploader"] * {{
     color: var(--uploader-text) !important;
   }}
+
+  /* Insert this right here before </style> */
+  [data-testid="stMetricValue"] {
+    color: var(--text-color) !important;
+  }
+  [data-testid="stMetricLabel"] p {
+    color: var(--text-color) !important;
+  }
 </style>
 """
 st.markdown(theme_css, unsafe_allow_html=True)
