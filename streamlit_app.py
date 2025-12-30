@@ -427,7 +427,9 @@ import streamlit as st
 st.set_page_config(page_title="Quran Contest Report", layout="wide")
 
 # MAC Branding CSS with time-based day/night palette
-is_daytime = False
+local_hour = (datetime.now().hour - 8) % 24 
+is_daytime = 6 <= local_hour < 18
+
 HIGHLIGHT_BG = "#dfe8d2" if is_daytime else "#4b5a4a"
 HIGHLIGHT_TEXT = "#2c2a26" if is_daytime else "#f4f1e8"
 theme_css = f"""
