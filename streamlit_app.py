@@ -17,25 +17,41 @@ theme_css = f"""
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap");
   :root {{
-    --app-bg: {"#efe6d7" if is_daytime else "#222821"};
-    --app-bg-2: {"#ebe1d1" if is_daytime else "#2a3129"};
-    --app-bg-3: {"#e5dacb" if is_daytime else "#1f2520"};
-    --sidebar-bg: {"#e9f2e9" if is_daytime else "#1f2721"};
-    --sidebar-bg-2: {"#f3f8f1" if is_daytime else "#242d26"};
-    --sidebar-border: {"#d7e2d6" if is_daytime else "#2f3a30"};
-    
-    /* --text-color: {"#2a2723" if is_daytime else "#e9e6df"}; */
-    
-    /* --text-color: {"#000000" if is_daytime else "#e9e6df"};*/
-    --text-color: {"#000000" if is_daytime else "#ffffff"};
-    --uploader-bg: {"#f7f4ee" if is_daytime else "#1f2721"};
-    --uploader-text: {"#2a2723" if is_daytime else "#e9e6df"};
-    --input-bg: {"#f6f0e6" if is_daytime else "#2b322b"};
-    --input-text: {"#2a2723" if is_daytime else "#e9e6df"};
-    --button-bg: {"#ece4d6" if is_daytime else "#303830"};
-    --button-text: {"#2a2723" if is_daytime else "#e9e6df"};
-    --expander-text: {"#2a2723" if is_daytime else "#f3efe4"};
+    /* Primary dynamic colors based on Vancouver time */
+    --app-bg: {"#efe6d7" if is_daytime else "#222821"};
+    --app-bg-2: {"#ebe1d1" if is_daytime else "#2a3129"};
+    --app-bg-3: {"#e5dacb" if is_daytime else "#1f2520"};
+    --sidebar-bg: {"#e9f2e9" if is_daytime else "#1f2721"};
+    --sidebar-bg-2: {"#f3f8f1" if is_daytime else "#242d26"};
+    --sidebar-border: {"#d7e2d6" if is_daytime else "#2f3a30"};
+    --text-color: {"#000000" if is_daytime else "#ffffff"};
+    --uploader-bg: {"#f7f4ee" if is_daytime else "#1f2721"};
+    --uploader-text: {"#2a2723" if is_daytime else "#e9e6df"};
+    --input-bg: {"#f6f0e6" if is_daytime else "#2b322b"};
+    --input-text: {"#2a2723" if is_daytime else "#e9e6df"};
+    --button-bg: {"#ece4d6" if is_daytime else "#303830"};
+    --button-text: {"#2a2723" if is_daytime else "#e9e6df"};
+    --expander-text: {"#2a2723" if is_daytime else "#f3efe4"};
+  }}
+
+  /* This tells the app to follow the computer's Dark Mode setting */
+  @media (prefers-color-scheme: dark) {{
+    :root {{
+      --app-bg: #222821;
+      --text-color: #ffffff;
+      --sidebar-bg: #1f2721;
+    }}
   }}
+
+  /* This tells the app to follow the computer's Light Mode setting */
+  @media (prefers-color-scheme: light) {{
+    :root {{
+      --app-bg: #efe6d7;
+      --text-color: #000000;
+      --sidebar-bg: #e9f2e9;
+    }}
+  }}
+  
   .stApp {{
     background: radial-gradient(circle at 25% 8%, var(--app-bg) 0%, var(--app-bg-2) 50%, var(--app-bg-3) 100%);
     color: var(--text-color);
