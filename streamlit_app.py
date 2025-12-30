@@ -165,12 +165,12 @@ theme_css = f"""
   }}
 
   /* Insert this right here before </style> */
-  [data-testid="stMetricValue"] {
+  [data-testid="stMetricValue"] {{
     color: var(--text-color) !important;
-  }
-  [data-testid="stMetricLabel"] p {
+  }}
+  [data-testid="stMetricLabel"] p {{
     color: var(--text-color) !important;
-  }
+  }}
 </style>
 """
 st.markdown(theme_css, unsafe_allow_html=True)
