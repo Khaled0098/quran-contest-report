@@ -23,7 +23,9 @@ theme_css = f"""
     --sidebar-bg: {"#e9f2e9" if is_daytime else "#1f2721"};
     --sidebar-bg-2: {"#f3f8f1" if is_daytime else "#242d26"};
     --sidebar-border: {"#d7e2d6" if is_daytime else "#2f3a30"};
-    # --text-color: {"#2a2723" if is_daytime else "#e9e6df"};
+    
+    /* --text-color: {"#2a2723" if is_daytime else "#e9e6df"}; */
+    
     --text-color: {"#000000" if is_daytime else "#e9e6df"};
     --uploader-bg: {"#f7f4ee" if is_daytime else "#1f2721"};
     --uploader-text: {"#2a2723" if is_daytime else "#e9e6df"};
