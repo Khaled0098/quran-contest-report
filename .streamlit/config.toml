@@ -1,5 +1,6 @@
 [theme]
+base = "light"
 primaryColor = "#dfe8d2"
-backgroundColor = "#f5efe6"  # This adds the tan/beige background
+backgroundColor = "#f5efe6"
 secondaryBackgroundColor = "#e9f0df"
 textColor = "#31333f"
