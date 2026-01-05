@@ -162,10 +162,10 @@ theme_css = f"""
   }}
   [data-testid="stFileUploader"] * {{
     color: var(--uploader-text) !important;
-  }}
-  
-</style>
+  }} 
+</style> 
 """
+
 st.markdown(theme_css, unsafe_allow_html=True)
 
 # --- Helper Functions ---
