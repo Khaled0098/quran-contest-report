@@ -1,6 +1,10 @@
 [theme]
-base = "light"
-primaryColor = "#dfe8d2"
-backgroundColor = "#f5efe6"
-secondaryBackgroundColor = "#e9f0df"
-textColor = "#31333f"
+base="dark"
+primaryColor="#f10b0b"
+backgroundColor="#000000"
+secondaryBackgroundColor="#232323"
+textColor="#ffffff"
+font="sans serif"
+
+[browser]
+sidebar-default-width = 200
